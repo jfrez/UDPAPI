@@ -43,7 +43,7 @@ req = http.request(options, function(res) {
 };
 exports.login = function(response,user,pass,salt,cookie,callback) {
 var post_data ='login_submit=on&login_do_redirect=1&no_cert_storing=on&j_salt='+salt+'&j_username='+user+'&j_password='+pass;
-
+/*
  post_data={
 login_submit:'on',
 login_do_redirect:1,
@@ -52,13 +52,15 @@ j_username:user,
 j_password:pass
 };
 post_data=querystring.stringify(post_data); 
-
+*/
 
 headers['Content-Length']= Buffer.byteLength(post_data);
 headers['Cookie']= cookie;
 var options = {
   host: 'portal.udp.cl',
   path: '/irj/portal',
+      method: 'POST',
+
   headers:headers,
 };
 console.log("options: "+JSON.stringify(options)+"\n");
