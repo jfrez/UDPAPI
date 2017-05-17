@@ -27,11 +27,11 @@ var options = {
     headers: headers
 };
 
-function call(error, response, data) {
-        if (!error && response.statusCode == 200) {
+function call(error, res, data) {
+        if (!error && res.statusCode == 200) {
 
 data=data.toString('utf8');
-var setcookie =response.headers['set-cookie'];	
+var setcookie =res.headers['set-cookie'];	
 callback($(data).find("input[name=j_salt]").val(),setcookie); // binary is your data
 }
 }
@@ -40,7 +40,7 @@ request(options, call);
 
 
 };
-exports.login = function(response,user,pass,salt,cookie,callback2) {
+exports.login = function(response,user,pass,salt,cookie,callback) {
 var request = require('request');
 
 var headers = {
@@ -73,10 +73,8 @@ var options = {
     body: dataString
 };
 
-function call(error, response, body) {
-console.log(body);
-console.log($(body).find("title").text());
-callback2($(body).find("title").text()); // binary is your data
+function call(error, res, body) {
+callback(response,res.statusCode); // binary is your data
 }
 request(options, call);
 
