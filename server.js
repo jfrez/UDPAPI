@@ -1,15 +1,26 @@
 var express = require('express');
 var api = require('./api');
 var app = express();
-var logged = function(res,data){
+
+ var cursos = function(res,data){
+
 res.write(JSON.stringify(data));
 res.end();
+  }
+
+
+var logged = function(res,data){
+cookie = data.headers['set-cookie']
+api.datos(res,cookie,cursos);
+
 }
+
+
+
 app.get('/login', function (req, res) {
   var user_id = req.param('rut');
   var token = req.param('pass');
 var login = function(salt,cookie){
-res.write("salt: "+salt+"\n");
  api.login(res,user_id,token,salt,cookie,logged);
 };
 api.salt(res,login);

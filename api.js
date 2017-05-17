@@ -26,7 +26,6 @@ var options = {
     method: 'GET',
     headers: headers
 };
-
 function call(error, res, data) {
         if (!error && res.statusCode == 200) {
 
@@ -79,7 +78,7 @@ callback(response,res); // binary is your data
 request(options, call);
 
 };
-exports.datos = function(Cookie,callback) {
+exports.datos = function(response,Cookie,callback) {
 var request = require('request');
 
 var headers = {
@@ -104,7 +103,7 @@ var options = {
     body: dataString
 };
 
-function callback(error, res, body) {
+function call(error, res, body) {
     if (!error && res.statusCode == 200) {
 
     datos = {}
@@ -115,18 +114,17 @@ function callback(error, res, body) {
 
     datos.ranking_u  =$(body).find("span[id='aaaa.MyDataCompView.rankingcarrera_editor.0']").text();
 
-    datos.promedio  =$(body).find("span[id='aaaa.MyDataCompView.promedio_editor.0']").text();
+    datos.promedio  =$(body).find("span[id='aaaa.MyDataCompView.promedio_editor.0']").text().replace(/\D/g,'');;
 
     datos.estado  =$(body).find("span[id='aaaa.MyDataCompView.estado_editor.0']").text();
     datos.carrera =$(body).find("input[id='aaaa.MyDataCompView.ToolBarDropDownByIndex']").val();
+callback(response,datos);
 
-
-console.log(datos)
 
 
     }
 }
 
-request(options, callback);
+request(options, call);
 
 };
