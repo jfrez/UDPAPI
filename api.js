@@ -65,7 +65,6 @@ j_password:pass,
 uidPasswordLogon:"Entrar al sistema"
 }
 var dataString = querystring.stringify(dat);
-console.log(dataString);
 var options = {
     url: 'http://portal.udp.cl/irj/portal',
     method: 'POST',
