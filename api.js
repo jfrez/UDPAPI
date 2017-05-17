@@ -5,22 +5,11 @@ var querystring = require('querystring');
    var { window } = new JSDOM();
    var JQ = require("jquery")(window);
 var $ = JQ;
-var headers = {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Connection': 'keep-alive',
-    'Referer': 'http://portal.udp.cl/irj/portal',
-    'origin': 'http://portal.udp.cl/',
-    'Host': 'portal.udp.cl',
-    'Accept-Language': 'es,en-US;q=0.8,en;q=0.6,it;q=0.4',
-    'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-};
 
 exports.salt = function(response,callback) {
 var options = {
-  host: 'portal.udp.cl',
-  path: '/irj/portal',
-  headers:headers
+hostname:'portal.udp.cl',
+path:'/irj/portal' 
 };
 req = http.request(options, function(res) {
    // res.setEncoding('binary');
@@ -42,32 +31,40 @@ req = http.request(options, function(res) {
 
 };
 exports.login = function(response,user,pass,salt,cookie,callback) {
-var post_data ='login_submit=on&login_do_redirect=1&no_cert_storing=on&j_salt='+salt+'&j_username='+user+'&j_password='+pass;
-/*
- post_data={
+var headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Connection': 'keep-alive',
+    'Referer': 'http://portal.udp.cl/irj/portal',
+    'origin': 'http://portal.udp.cl/',
+    'Host': 'portal.udp.cl',
+    'Accept-Language': 'es,en-US;q=0.8,en;q=0.6,it;q=0.4',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+};
+
+ var post_data=querystring.stringify({
 login_submit:'on',
 login_do_redirect:1,
 j_salt:salt,
+uidPasswordLogon:"Entrar al sistema",
 j_username:user,
 j_password:pass
-};
-post_data=querystring.stringify(post_data); 
-*/
+});
 
-headers['Content-Length']= Buffer.byteLength(post_data);
-headers['Cookie']= cookie;
+headers['Cookie']= cookie.join(";");
+headers['Content-Length']=Buffer.byteLength(post_data);
+
+
 var options = {
-  host: 'portal.udp.cl',
-  path: '/irj/portal',
       method: 'POST',
-
+hostname:'portal.udp.cl',
+path:'/irj/portal',  
+   form:post_data,
   headers:headers,
 };
-console.log("options: "+JSON.stringify(options)+"\n");
-console.log("post: "+JSON.stringify(post_data)+"\n");
 req = http.request(options, function(res) {
-   // res.setEncoding('binary');
     var data = "";
+console.log(res);
 
     res.on('data', function(chunk) {
 	chunk = chunk.toString('utf8');
@@ -81,8 +78,7 @@ req = http.request(options, function(res) {
         console.log(err.message);
     });
 });
- req.write(post_data);
-console.log(post_data);
+req.write(post_data);
  req.end();
 
 };
