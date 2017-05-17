@@ -168,30 +168,60 @@ var str= '<td class="urIlb2I urColorTxtStandard">';
 	 end=body.indexOf('</td>',start);
 	var code= body.substring(start+len, end);
 	if(code.length >6 && code.length <13){
-		datos.push(code);
+		datos.push({cod:code,id:null});
 	}
 	}	
 dat.cursos=datos;
-/*
-    datos.nombre  =$(body).find("input[id='aaaa.MyDataCompView.First_Name']").val()
-    datos.apellido  =$(body).find("input[id='aaaa.MyDataCompView.Last_Name']").val()
-    datos.ingreso  =$(body).find("span[id='aaaa.MyDataCompView.yearperid_editor.0']").text();
-    datos.ranking_escuela  =$(body).find("span[id='aaaa.MyDataCompView.posicionescuela_editor.0']").text();
-
-    datos.ranking_u  =$(body).find("span[id='aaaa.MyDataCompView.rankingcarrera_editor.0']").text();
-
-    datos.promedio  =$(body).find("span[id='aaaa.MyDataCompView.promedio_editor.0']").text().replace(/\D/g,'');;
-
-    datos.estado  =$(body).find("span[id='aaaa.MyDataCompView.estado_editor.0']").text();
-    datos.carrera =$(body).find("input[id='aaaa.MyDataCompView.ToolBarDropDownByIndex']").val();
-*/
 callback(response,dat);
-
-
-
     }
 }
 
 request(options, call);
 
 };
+
+exports.curso = function(response,Cookie,callback,curso,dat) {
+var request = require('request');
+Cookie='JSESSIONID=O1AZzq2P74AI0YMJNTa0rGMp5HESXAHrwjkA_SAPyBTNIqV7Ej2IUNZz_jnjDago; saplb_*=(J2EE3785420)3785452; MYSAPSSO2=AjExMDAgABBwb3J0YWw6MTgwMjA2Nzc5iAATYmFzaWNhdXRoZW50aWNhdGlvbgEACTE4MDIwNjc3OQIAAzAwMAMAA0VQUAQADDIwMTcwNTE3MTY0OQUABAAAAAgKAAkxODAyMDY3Nzn%2FAQUwggEBBgkqhkiG9w0BBwKggfMwgfACAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3DQEHATGB0DCBzQIBATAiMB0xDDAKBgNVBAMTA0VQUDENMAsGA1UECxMESjJFRQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTcwNTE3MTY0OTE3WjAjBgkqhkiG9w0BCQQxFgQUNasdlyjNTbROcQf2HwBvYacsiMUwCQYHKoZIzjgEAwQvMC0CFBYD!SXGb6ikR3Y!bg9No7gM1vXEAhUApn4uGYpAj8Cw6ULvCzXsi8ciOY0%3D; JSESSIONMARKID=fhWv1QpVARtrFNW4K9etkYsdgN1y6ypvC8cuzCOQA; sap-usercontext=sap-language=ES&sap-client=300; _ga=GA1.2.58808879.1495040844; _gid=GA1.2.734918020.1495053641; PortalAlias=portal; SAP_SESSIONID_UDP_300=WQOBnLiF8UC9AWbz01qAtFkcbf50dkGA4QCAAKwQF2M%3d; SAPWP_active=1';
+var headers = {
+    'Origin': 'http://portal.udp.cl',
+    'Accept-Encoding': ' deflate',
+    'Accept-Language': 'es-419,es;q=0.8',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Cache-Control': 'max-age=0',
+    'Referer': 'http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?HistoryMode=2&windowId=WID1495000471394&NavMode=0&PrevNavTarget=navurl%3A%2F%2F73123621b8341c30a4d2aefff9ba0892',
+    'Connection': 'keep-alive',
+    'Cookie':Cookie};
+
+dataString='sap-ext-sid=PfRKuP5AYjSIBYcu*PopCA--ihKlhXVGUuJzX_xqnKmKig--&sap-wd-cltwndid=WID1495053905571&sap-wd-norefresh=X&sap-wd-secure-id=f7nfZmwNTeYf-J_oJ2EZWA%3D%3D&SAPEVENTQUEUE=ComboBox_Select%EE%80%82Id%EE%80%84aaaa.DocCompView.DropDownByIndex%EE%80%85Key%EE%80%84'+curso+'%EE%80%85ByEnter%EE%80%84false%EE%80%83%EE%80%82ClientAction%EE%80%84submit%EE%80%83%EE%80%82urEventName%EE%80%84COMBOBOXSELECTIONCHANGE%EE%80%83%EE%80%81Form_Request%EE%80%82Id%EE%80%84...form%EE%80%85Async%EE%80%84false%EE%80%85FocusInfo%EE%80%84%40%7B%22sFocussedId%22%3A%20%22aaaa.DocCompView.DropDownByIndex%22%7D%EE%80%85Hash%EE%80%84%EE%80%85DomChanged%EE%80%84false%EE%80%85IsDirty%EE%80%84false%EE%80%83%EE%80%82EnqueueCardinality%EE%80%84single%EE%80%83%EE%80%82%EE%80%83';
+var options = {
+    url:'http://portal.udp.cl/webdynpro/resources/sap.com/pb/PageBuilder',
+	method: 'POST',
+    headers: headers,
+    body: dataString
+};
+
+function call(error, res, body) {
+    if (!error && res.statusCode == 200) {
+
+        var str= '<input type="text" name="CURS_CODIGO" value="';
+        var len = str.length;
+	var start=body.indexOf(str);
+	var end=body.indexOf('" readonly>',start);
+	 var code= body.substring(start+len, end);
+	
+	if(code.length >6 && code.length <13){
+		dat.cursos[curso].id=code;
+		dat.cursos[curso].status=true;
+	}
+callback(response,dat,curso+1);
+    }
+}
+
+request(options, call);
+
+};
+
