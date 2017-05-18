@@ -11,22 +11,34 @@ api.curso(res,cookie,getcodigo,curso,data);
 }
 }
 
+ var printallprof = function(res,data){
+res.write(JSON.stringify(data));
+res.end();
+}
  var printall = function(res,data){
 data.cursos[0].status=false;
 api.curso(res,cookie,getcodigo,0,data);
-
 }
  var cursos = function(res,data,cookie,dat){
- 
 api.cursos(res,cookie,printall,dat);
   }
 
+ var cursosprof = function(res,data,cookie,dat){
+api.cursosprof(res,cookie,printallprof,dat);
+  }
+ var profesor = function(res,data,cookie,dat){
+api.datosprof(res,cookie,cursosprof,dat);
+  }
 
 var logged = function(res,data,dat){
+if((data.statusCode)!= 302){
+res.write(JSON.stringify({status:false}));
+res.end();
+}else{
+dat.status=true;
 cookie = data.headers['set-cookie']
-dat.cookie=cookie;
-api.datos(res,cookie,cursos,dat);
-
+api.datos(res,cookie,cursos,dat,profesor);
+}
 }
 
 
@@ -38,8 +50,6 @@ var dat = {};
 dat.rut = user_id;
 
 var login = function(salt,cookie,dat){
-dat.salt=salt;
-dat.cookie=cookie;
  api.login(res,user_id,token,salt,cookie,logged,dat);
 };
 api.salt(res,login,dat);
