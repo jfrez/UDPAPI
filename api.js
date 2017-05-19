@@ -85,7 +85,6 @@ console.log(cookie);
 var JSESSIONID = (str_obj(cookie[3]).JSESSIONID);
 JSESSIONID=JSESSIONID.substring(0,JSESSIONID.indexOf(";"));
 datos.sessionid=JSESSIONID;
-console.log(JSESSIONID);
 //var id = (Cookie[1]).substring(1+Cookie[1].indexOf("="), Cookie[1].indexOf(";"));
 callback(response,res,datos,cookie); // binary is your data
 }
@@ -93,6 +92,41 @@ request(options, call);
 
 };
 
+
+exports.sapextid= function(response,Cookie,callback,dat){
+var request = require('request');
+
+var headers = {
+    'Origin': 'http://portal.udp.cl',
+    'Accept-Language': 'es,en-US;q=0.8,en;q=0.6,it;q=0.4',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Cache-Control': 'max-age=0',
+    'Referer': 'http://portal.udp.cl/irj/portal',
+    'Connection': 'keep-alive',
+    'Cookie': decodeURIComponent(Cookie[0])};
+
+var dataString = 'NavigationTarget=ROLES%3A%2F%2Fportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2FAvisosApp';
+
+var options = {
+    url:'http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?windowId=WID1495231899808',
+	method: 'POST',
+    headers: headers,
+    body: dataString
+};
+
+function call(error, res, body) {
+        if ( res.statusCode == 200) {
+dat.sapextsid = $(body).find("input[name=sap-ext-sid]").val();
+callback(response,Cookie,dat);
+}
+}
+
+request(options, call);
+
+};
 exports.datosprof = function(response,Cookie,callback,dat) {
 var request = require('request');
 
@@ -144,18 +178,18 @@ console.log(Cookie);
 console.log("-------------------------");
 var headers = {
     'Origin': 'http://portal.udp.cl',
-    'Accept-Encoding': ' deflate',
+    'Host':'portal.udp.cl',
     'Accept-Language': 'es-419,es;q=0.8',
     'Upgrade-Insecure-Requests': '1',
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Cache-Control': 'max-age=0',
-    'Referer': 'http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?HistoryMode=2&windowId=WID1495000471394&NavMode=0&PrevNavTarget=navurl%3A%2F%2F73123621b8341c30a4d2aefff9ba0892',
     'Connection': 'keep-alive',
-    'Cookie': decodeURIComponent(Cookie)};
+    'Referer':'Referer:http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?windowId=WID1495229086985',
+    'Cookie': decodeURIComponent(Cookie[0])};
 var n=Date.now();
-var dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid=WID'+n+'&sap-wd-tstamp='+n+'&PagePath=pcd%3Aportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2Fhome%2FMyDataApp&sap-wd-app-namespace=zzzz&sap-ep-version=7.40.201304112106&sap-locale=es&sap-accessibility=&sap-rtl=&sap-explanation=null&sap-cssurl=http%3A%2F%2Fportal.udp.cl%3A80%2Fcom.sap.portal.design.urdesigndata%2Fthemes%2Fportal%2Fudp_gray%2Fls%2Fls_sf3.css%3Fv%3D7.33.3.24.1&sap-cssversion=7.33.3.24.0&sap-epcm-guid=4E93D24EBE27DF20133AF3D62D46401BA1624A7DBADF381E5C2F2DC768EEB2A3&com.sap.portal.reserved.wd.pb.restart=false&DynamicParameter=&SerWinIdString=%26&NavigationTarget=pcd%3Aportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2Fhome&NavMode=0&HistoryMode=2&PrevNavTarget=navurl%3A%2F%2F73123621b8341c30a4d2aefff9ba0892';
+var dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid=WIDWID1495229086985&sap-wd-tstamp='+n+'&PagePath=pcd%3Aportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2Fhome%2FMyDataApp&sap-wd-app-namespace=zzzz&sap-ep-version=7.40.201304112106&sap-locale=es&sap-accessibility=&sap-rtl=&sap-explanation=null&sap-cssurl=http%3A%2F%2Fportal.udp.cl%3A80%2Fcom.sap.portal.design.urdesigndata%2Fthemes%2Fportal%2Fudp_gray%2Fls%2Fls_sf3.css%3Fv%3D7.33.3.24.1&sap-cssversion=7.33.3.24.0&sap-epcm-guid=4E93D24EBE27DF20133AF3D62D46401BA1624A7DBADF381E5C2F2DC768EEB2A3&com.sap.portal.reserved.wd.pb.restart=false&DynamicParameter=&SerWinIdString=%26&NavigationTarget=pcd%3Aportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2Fhome&NavMode=0&HistoryMode=2&PrevNavTarget=navurl%3A%2F%2F73123621b8341c30a4d2aefff9ba0892';
 var options = {
     url: 'http://portal.udp.cl/webdynpro/resources/sap.com/pb/PageBuilder',
     method: 'POST',
@@ -164,9 +198,8 @@ var options = {
 };
 
 function call(error, res, body) {
-response.write(body);
+//response.write(body);
 dat.sapwdsecureid = $(body).find("input[name=sap-wd-secure-id]").val();
-dat.sapextsid = $(body).find("input[name=sap-ext-sid]").val();
     if (!error && res.statusCode == 200) {
 
     datos = {}
@@ -335,7 +368,7 @@ response.end();
 		dat.cursos[curso].id=code;
 		dat.cursos[curso].status=true;
 	}
-//callback(response,dat,curso+1,Cookie);
+callback(response,dat,curso+1,Cookie);
     }
 }
 

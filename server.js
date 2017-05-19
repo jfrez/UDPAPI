@@ -3,17 +3,14 @@ var api = require('./api');
 var app = express();
 
 var getcodigo=function(res,data,curso){
-res.write(JSON.stringify(data));
-res.end();
-return;
+console.log(curso);
 if(curso>data.cursos.length-1){
 res.write(JSON.stringify(data));
 res.end();
 }else{
-res.write(JSON.stringify(data));
-res.end();
-//api.curso(res,cookie,getcodigo,curso,data);
+api.curso(res,cookie,getcodigo,curso+1,data);
 }
+
 }
 
  var printallprof = function(res,data,cookie){
@@ -38,7 +35,11 @@ api.cursosprof(res,cookie,printallprof,dat);
  var profesor = function(res,data,cookie,dat){
 api.datosprof(res,cookie,cursosprof,dat);
   }
-
+ var splitter = function(res,cookie,dat){
+console.log(dat);
+console.log(cookie);
+api.datos(res,cookie,cursos,dat,profesor);
+  }
 var logged = function(res,data,dat,cookie){
 console.log("EXT " + dat.sapextsid);
 if((data.statusCode)!= 302){
@@ -46,8 +47,8 @@ res.write(JSON.stringify({status:false}));
 res.end();
 }else{
 dat.status=true;
-api.datos(res,cookie,cursos,dat,profesor);
 console.log("logged");
+api.sapextid(res,cookie,splitter,dat);
 }
 }
 
