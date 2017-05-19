@@ -120,6 +120,7 @@ var options = {
 function call(error, res, body) {
         if ( res.statusCode == 200) {
 dat.sapextsid = $(body).find("input[name=sap-ext-sid]").val();
+dat.sapwdcltwndid = $(body).find("input[name=sap-wd-cltwndid]").val();
 callback(response,Cookie,dat);
 }
 }
@@ -391,7 +392,7 @@ var headers = {
     'Connection': 'keep-alive',
     'Cookie':decodeURIComponent(Cookie)};
 
-var dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid=WID1495053905571&sap-wd-norefresh=X&sap-wd-secure-id='+encodeURIComponent(dat.sapwdsecureid)+'&SAPEVENTQUEUE=ComboBox_Select%EE%80%82Id%EE%80%84aaaa.DocCompView.DropDownByIndex%EE%80%85Key%EE%80%84'+curso+'%EE%80%85ByEnter%EE%80%84false%EE%80%83%EE%80%82ClientAction%EE%80%84submit%EE%80%83%EE%80%82urEventName%EE%80%84COMBOBOXSELECTIONCHANGE%EE%80%83%EE%80%81Form_Request%EE%80%82Id%EE%80%84...form%EE%80%85Async%EE%80%84false%EE%80%85FocusInfo%EE%80%84%40%7B%22sFocussedId%22%3A%20%22aaaa.DocCompView.DropDownByIndex%22%7D%EE%80%85Hash%EE%80%84%EE%80%85DomChanged%EE%80%84false%EE%80%85IsDirty%EE%80%84false%EE%80%83%EE%80%82EnqueueCardinality%EE%80%84single%EE%80%83%EE%80%82%EE%80%83';
+var dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid='+dat.sapwdcltwndid+'&sap-wd-norefresh=X&sap-wd-secure-id='+encodeURIComponent(dat.sapwdsecureid)+'&SAPEVENTQUEUE=ComboBox_Select%EE%80%82Id%EE%80%84aaaa.DocCompView.DropDownByIndex%EE%80%85Key%EE%80%84'+curso+'%EE%80%85ByEnter%EE%80%84false%EE%80%83%EE%80%82ClientAction%EE%80%84submit%EE%80%83%EE%80%82urEventName%EE%80%84COMBOBOXSELECTIONCHANGE%EE%80%83%EE%80%81Form_Request%EE%80%82Id%EE%80%84...form%EE%80%85Async%EE%80%84false%EE%80%85FocusInfo%EE%80%84%40%7B%22sFocussedId%22%3A%20%22aaaa.DocCompView.DropDownByIndex%22%7D%EE%80%85Hash%EE%80%84%EE%80%85DomChanged%EE%80%84false%EE%80%85IsDirty%EE%80%84false%EE%80%83%EE%80%82EnqueueCardinality%EE%80%84single%EE%80%83%EE%80%82%EE%80%83';
 var options = {
     url:'http://portal.udp.cl/webdynpro/resources/sap.com/pb/PageBuilder',
 	method: 'POST',

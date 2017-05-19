@@ -3,7 +3,6 @@ var api = require('./api');
 var app = express();
 
 var getcodigo=function(res,data,curso){
-console.log(curso);
 if(curso>data.cursos.length-1){
 res.write(JSON.stringify(data));
 res.end();
