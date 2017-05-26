@@ -150,7 +150,7 @@ var headers = {
     'Referer': 'http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?HistoryMode=2&windowId=WID1495000471394&NavMode=0&PrevNavTarget=navurl%3A%2F%2F73123621b8341c30a4d2aefff9ba0892',
     'Connection': 'keep-alive',
     'Cookie': decodeURIComponent(Cookie[0])};
-var dataString='sap-ext-sid='+(dat.sapextsid)+'&sap-wd-cltwndid=WID1495224632118&sap-wd-tstamp=1495224452449&PagePath=pcd%3Aportal_content%2Fpc_udp%2Finstructors%2FUDP_teacher%2Fportal_in_udp%2Fst_mycourses%2FMisDocumentos%2FDocApp_2_2&sap-wd-app-namespace=zzzz&sap-ep-version=7.40.201304112106&sap-locale=es&sap-accessibility=&sap-rtl=&sap-explanation=null&sap-cssurl=http%3A%2F%2Fportal.udp.cl%3A80%2Fcom.sap.portal.design.urdesigndata%2Fthemes%2Fportal%2Fudp_gray%2Fls%2Fls_sf3.css%3Fv%3D7.33.3.24.1&sap-cssversion=7.33.3.24.0&sap-epcm-guid=4E93D24EBE27DF20133AF3D62D46401BA1624A7DBADF381E5C2F2DC768EEB2A3&com.sap.portal.reserved.wd.pb.restart=false&DynamicParameter=&SerWinIdString=%26&NavigationTarget=navurl%3A%2F%2F00dbcfec6d2c181d1b767f80247e7e45&NavMode=0&ExecuteLocally=true&CurrentWindowId=WID1495224632118&PrevNavTarget=navurl%3A%2F%2F00dbcfec6d2c181d1b767f80247e7e45';
+dataString = 'sap-ext-sid='+dat.sapextid+'&sap-wd-cltwndid='+dat.sapwdcltwndid+'&sap-wd-tstamp=1495324148828&PagePath=pcd%3Aportal_content%2Fpc_udp%2Finstructors%2FUDP_teacher%2Fportal_in_udp%2Fst_mydata%2Fhome%2FMyPersDataApp&sap-wd-app-namespace=zzzz&sap-ep-version=7.40.201304112106&sap-locale=es_ES&sap-accessibility=&sap-rtl=&sap-explanation=null&sap-cssurl=http%3A%2F%2Fportal.udp.cl%3A80%2Fcom.sap.portal.design.urdesigndata%2Fthemes%2Fportal%2Fudp_gray%2Fls%2Fls_sf3.css%3Fv%3D7.33.3.24.1&sap-cssversion=7.33.3.24.0&sap-epcm-guid=4E93D24EBE27DF20133AF3D62D46401BA1624A7DBADF381E5C2F2DC768EEB2A3&com.sap.portal.reserved.wd.pb.restart=false&DynamicParameter=&SerWinIdString=%26&NavigationTarget=pcd%3Aportal_content%2Fpc_udp%2Finstructors%2FUDP_teacher%2Fportal_in_udp%2Fst_mydata%2Fhome&NavMode=0&HistoryMode=2&PrevNavTarget=navurl%3A%2F%2F182596011fbaadb3713178fcf95ffc1f';
 var options = {
     url: 'http://portal.udp.cl/webdynpro/resources/sap.com/pb/PageBuilder;jsapextsid=u_YmYVJIseyoOvJ3UK7hsL_WmHAUXAHrwjkA_SAP',
     method: 'POST',
@@ -168,6 +168,7 @@ function call(error, res, body) {
     datos.facultad  =$(body).find("input[id='aaaa.MyPersDataCompView.Nameofpersarea']").val();
     datos.unidad  =$(body).find("input[id='aaaa.MyPersDataCompView.Nameoforgunit']").val();
 dat.datos = datos;
+console.log(datos);
 var Cookie =res.headers['set-cookie'];	
 callback(response,datos,Cookie,dat);
 
@@ -178,6 +179,43 @@ callback(response,datos,Cookie,dat);
 request(options, call);
 
 };
+exports.noticias = function(response,Cookie,callback,dat) {
+var request = require('request');
+Cookie = 'JSESSIONID='+dat.JSESSIONID+';saplb_*=(J2EE3785420)3785451; MYSAPSSO2='+dat.MYSAPSSO2+'; JSESSIONMARKID='+dat.JSESSIONMARKID+'; PortalAlias=portal; SAPWP_active=1';
+var headers = {
+    'Origin': 'http://portal.udp.cl',
+    'Host':'portal.udp.cl',
+    'Accept-Language': 'es-419,es;q=0.8',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'Referer':'http://portal.udp.cl/irj/portal',
+	'Cookie':  Cookie,
+};
+var url ='http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?windowId='+dat.sapwdcltwndid;
+var dataString='NavigationTarget=ROLES%3A%2F%2Fportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2FAvisosApp';
+var options = {
+    url:url,
+	method: 'POST',
+    headers: headers,
+    body: dataString
+};
+function call(error, res, body) {
+response.write(body);
+response.end();
+console.log(Cookie);
+    if (!error && res.statusCode == 200) {
+//callback(response,Cookie,dat);
+    }
+}
+
+request(options, call);
+
+};
+
 
 
 exports.datos = function(response,Cookie,callback,dat,profesor) {
@@ -205,6 +243,8 @@ var options = {
 function call(error, res, body) {
 dat.sapwdsecureid = $(body).find("input[name=sap-wd-secure-id]").val();
     if (!error && res.statusCode == 200) {
+Cookie =res.headers['set-cookie'];
+
     datos = {}
     datos.nombre  =$(body).find("input[id='aaaa.MyDataCompView.First_Name']").val()
     datos.type  ="Alum";

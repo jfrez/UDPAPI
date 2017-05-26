@@ -23,20 +23,25 @@ console.log("-------PRINT-----------");
 console.log(data);
 res.write(JSON.stringify(data));
 res.end();
-api.curso(res,cookie,getcodigo,0,data);
+//api.curso(res,cookie,getcodigo,0,data);
 }
  var cursos = function(res,data,cookie,dat){
 api.cursos(res,cookie,printall,dat);
   }
 
+ var noticias = function(res,data,cookie,dat){
+console.log("NOTICIAS");
+api.noticias(res,cookie,cursos,dat);
+  }
  var cursosprof = function(res,data,cookie,dat){
 api.cursosprof(res,cookie,printallprof,dat);
   }
  var profesor = function(res,data,cookie,dat){
+console.log("Profesor");
 api.datosprof(res,cookie,cursosprof,dat);
   }
  var splitter = function(res,cookie,dat){
-api.datos(res,cookie,cursos,dat,profesor);
+api.datos(res,cookie,noticias,dat,profesor);
   }
 var logged = function(res,data,dat,cookie){
 if((data.statusCode)!= 302){
