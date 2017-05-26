@@ -184,37 +184,98 @@ var request = require('request');
 Cookie = 'JSESSIONID='+dat.JSESSIONID+';saplb_*=(J2EE3785420)3785451; MYSAPSSO2='+dat.MYSAPSSO2+'; JSESSIONMARKID='+dat.JSESSIONMARKID+'; PortalAlias=portal; SAPWP_active=1';
 var headers = {
     'Origin': 'http://portal.udp.cl',
-    'Host':'portal.udp.cl',
-    'Accept-Language': 'es-419,es;q=0.8',
+    'Accept-Language': 'es-ES,es;q=0.8',
     'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36',
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Cache-Control': 'max-age=0',
-    'Connection': 'keep-alive',
-    'Referer':'http://portal.udp.cl/irj/portal',
+    'Referer': 'http://portal.udp.cl/irj/portal',
 	'Cookie':  Cookie,
+    'Connection': 'keep-alive'
 };
+
 var url ='http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?windowId='+dat.sapwdcltwndid;
 var dataString='NavigationTarget=ROLES%3A%2F%2Fportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2FAvisosApp';
 var options = {
     url:url,
-	method: 'POST',
     headers: headers,
-    body: dataString
+	method: 'GET'
 };
 function call(error, res, body) {
-response.write(body);
-response.end();
-console.log(Cookie);
     if (!error && res.statusCode == 200) {
-//callback(response,Cookie,dat);
+str="registerFullKey('";
+end="', '";
+	 start=body.indexOf(str,0);
+	 end=body.indexOf(end,start);
+	 end2=body.indexOf("');",end+3);
+	len=17;
+	var code= body.substring(start+len, end);
+	var code2= body.substring(end+4, end2);
+console.log(code);
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("\\","/");
+code = code.replace("/x3","%3");
+code = code.replace("/x2d","-");
+code = code.replace("/x2d","-");
+code = code.replace("/x2d","-");
+code = code.replace("/x2d","-");
+code = code.replace("/x2d","-");
+dat.SerAttrKeyString=code;
+
+dat.SerAttrKeyString=code;
+console.log(code);
+console.log(code2);
+dat.SerAttrKeyString=code+'%26'+code2;
+dat.SerWinIdString='%26';
+callback(response,null,Cookie,dat);
     }
 }
 
 request(options, call);
 
 };
+exports.noticiasstep2 = function(response,Cookie,callback,dat) {
+var request = require('request');
+Cookie = 'JSESSIONID='+dat.JSESSIONID+';saplb_*=(J2EE3785420)3785451; MYSAPSSO2='+dat.MYSAPSSO2+'; JSESSIONMARKID='+dat.JSESSIONMARKID+'; PortalAlias=portal; SAPWP_active=1';
+var headers = {
+    'Origin': 'http://portal.udp.cl',
+    'Accept-Language': 'es-ES,es;q=0.8',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Cache-Control': 'max-age=0',
+    'Referer': 'http://portal.udp.cl/irj/portal',
+	'Cookie':  Cookie,
+    'Connection': 'keep-alive'
+};
+
+var url ='http://portal.udp.cl/irj/servlet/prt/portal/prteventname/Navigate/prtroot/pcd!3aportal_content!2fevery_user!2fgeneral!2fdefaultAjaxframeworkContent!2fcom.sap.portal.contentarea?windowId='+dat.sapwdcltwndid;
+dataString='NavigationTarget=pcd%3Aportal_content%2Fpc_udp%2Fstudents%2FUDP_student%2Fportal_st_udp%2Fst_mydata%2Fhome&Command=SUSPEND&SerPropString=&SerKeyString=&SerAttrKeyString='+dat.SerAttrKeyString+'&SerWinIdString='+dat.SerWinIdString+'&DebugSet=&Embedded=true&SessionKeysAvailable=true';
+var options = {
+    url:url,
+    headers: headers,
+	method: 'POST',
+	body:dataString
+};
+function call(error, res, body) {
+    if (!error && res.statusCode == 200) {
+callback(response,null,Cookie,dat);
+    }
+}
+
+request(options, call);
+
+};
+
 
 
 
@@ -397,11 +458,9 @@ var options = {
     headers: headers,
     body: dataString
 };
-
+console.log("---------CURSO---------");
 function call(error, res, body) {
 console.log(res.statusCode);
-console.log(Cookie);
-console.log(dataString);
 if (!error && res.statusCode == 200) {
 
         var str= '<input type="text" name="CURS_CODIGO" value="';
@@ -417,6 +476,10 @@ if (!error && res.statusCode == 200) {
 	}
 //callback(response,dat,curso+1,Cookie);
     }
+else{
+response.write(body);
+response.end();
+}
 }
 
 request(options, call);
@@ -439,6 +502,7 @@ var headers = {
     'Cookie':decodeURIComponent(Cookie)};
 
 var dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid='+dat.sapwdcltwndid+'&sap-wd-norefresh=X&sap-wd-secure-id='+encodeURIComponent(dat.sapwdsecureid)+'&SAPEVENTQUEUE=ComboBox_Select%EE%80%82Id%EE%80%84aaaa.DocCompView.DropDownByIndex%EE%80%85Key%EE%80%84'+curso+'%EE%80%85ByEnter%EE%80%84false%EE%80%83%EE%80%82ClientAction%EE%80%84submit%EE%80%83%EE%80%82urEventName%EE%80%84COMBOBOXSELECTIONCHANGE%EE%80%83%EE%80%81Form_Request%EE%80%82Id%EE%80%84...form%EE%80%85Async%EE%80%84false%EE%80%85FocusInfo%EE%80%84%40%7B%22sFocussedId%22%3A%20%22aaaa.DocCompView.DropDownByIndex%22%7D%EE%80%85Hash%EE%80%84%EE%80%85DomChanged%EE%80%84false%EE%80%85IsDirty%EE%80%84false%EE%80%83%EE%80%82EnqueueCardinality%EE%80%84single%EE%80%83%EE%80%82%EE%80%83';
+dataString='sap-ext-sid='+encodeURIComponent(dat.sapextsid)+'&sap-wd-cltwndid='+dat.sapwdcltwndid+'&sap-wd-norefresh=X&sap-wd-secure-id='+encodeURIComponent(dat.sapwdsecureid)+'&SAPEVENTQUEUE=ComboBox_Select%EE%80%82Id%EE%80%84aaaa.DocCompView.DropDownByIndex%EE%80%85Key%EE%80%84'+curso+'%EE%80%85ByEnter%EE%80%84false%EE%80%83%EE%80%82ClientAction%EE%80%84submit%EE%80%83%EE%80%82urEventName%EE%80%84COMBOBOXSELECTIONCHANGE%EE%80%83%EE%80%81Form_Request%EE%80%82Id%EE%80%84...form%EE%80%85Async%EE%80%84false%EE%80%85FocusInfo%EE%80%84%40%7B%22sFocussedId%22%3A%20%22aaaa.DocCompView.DropDownByIndex%22%7D%EE%80%85Hash%EE%80%84%EE%80%85DomChanged%EE%80%84false%EE%80%85IsDirty%EE%80%84false%EE%80%83%EE%80%82EnqueueCardinality%EE%80%84single%EE%80%83%EE%80%82%EE%80%83';
 var options = {
     url:'http://portal.udp.cl/webdynpro/resources/sap.com/pb/PageBuilder',
 	method: 'POST',

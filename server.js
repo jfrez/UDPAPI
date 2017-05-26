@@ -4,7 +4,6 @@ var app = express();
 
 var getcodigo=function(res,data,curso,cookie){
 console.log("-------CODIGO-----------");
-console.log(data);
 if(curso>data.cursos.length-1){
 res.write(JSON.stringify(data));
 res.end();
@@ -21,17 +20,20 @@ res.end();
  var printall = function(res,data,cookie){
 console.log("-------PRINT-----------");
 console.log(data);
-res.write(JSON.stringify(data));
-res.end();
-//api.curso(res,cookie,getcodigo,0,data);
+
+
+api.curso(res,cookie,getcodigo,0,data);
 }
  var cursos = function(res,data,cookie,dat){
+console.log("-------CURSOS-----------");
 api.cursos(res,cookie,printall,dat);
   }
 
+ var noticias2 = function(res,data,cookie,dat){
+api.noticiasstep2(res,cookie,cursos,dat);
+  }
  var noticias = function(res,data,cookie,dat){
-console.log("NOTICIAS");
-api.noticias(res,cookie,cursos,dat);
+api.noticias(res,cookie,noticias2,dat);
   }
  var cursosprof = function(res,data,cookie,dat){
 api.cursosprof(res,cookie,printallprof,dat);
